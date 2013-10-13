@@ -110,7 +110,7 @@ $(GETTEXT_COMPILE): $(GETTEXT_DOWNLOAD) $(EXPAT_COMPILE) $(LIBICONV_COMPILE)
 	touch $@
 
 
-dist:
+dist: compile
 	rm -rf $(DISTDIR)
 	mkdir -p $(DISTDIR)/bin
 	cp -a LICENSE $(DISTDIR)/license.txt
