@@ -29,7 +29,7 @@ MinGW or gettext or gnulib changes (hence this project...).
 License
 -------
 
-The COPYING file in this directory applies to GNU gettext itself, which is
+The LICENSE file in this directory applies to GNU gettext itself, which is
 licensed under GPLv3. The makefiles and scripts for building it on Windows are
 in the public domain.
 
