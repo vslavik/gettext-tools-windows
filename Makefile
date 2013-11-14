@@ -125,6 +125,7 @@ dist: compile
 	cp -a /mingw/bin/pthreadGC2.dll $(DISTDIR)/bin
 	mkdir -p $(DISTDIR)/doc
 	cp -a $(USR_LOCAL)/share/doc/gettext/*.html $(DISTDIR)/doc/
+	strip --strip-all $(USR_LOCAL)/bin/*.dll $(USR_LOCAL)/bin/*.exe
 
 
 archive: dist
