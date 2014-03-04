@@ -24,6 +24,8 @@ GETTEXT_FLAGS     = --disable-static \
 					--enable-relocatable \
 					ac_cv_func__set_invalid_parameter_handler=no
 
+CFLAGS  := -O2
+LDFLAGS := -Wl,--dynamicbase -Wl,--nxcompat -Wl,--no-seh
 
 PATCHESDIR  = $(CURDIR)/patches
 BUILDDIR    = $(CURDIR)/build
@@ -69,7 +71,7 @@ $(EXPAT_COMPILE): $(EXPAT_DOWNLOAD)
 	mkdir -p $(STAGEDIR)
 	tar -C $(COMPILEDIR) -xzf $<
 	cd $(COMPILEDIR)/expat-$(EXPAT_VERSION) && \
-		./configure $(EXPAT_FLAGS) && \
+		./configure $(EXPAT_FLAGS) CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" && \
 		make && \
 		make install DESTDIR=$(STAGEDIR)
 	touch $@
@@ -85,7 +87,7 @@ $(LIBICONV_COMPILE): $(LIBICONV_DOWNLOAD)
 	mkdir -p $(STAGEDIR)
 	tar -C $(COMPILEDIR) -xzf $<
 	cd $(COMPILEDIR)/libiconv-$(LIBICONV_VERSION) && \
-		./configure $(LIBICONV_FLAGS) && \
+		./configure $(LIBICONV_FLAGS) CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" && \
 		make && \
 		make install DESTDIR=$(STAGEDIR)
 	touch $@
@@ -105,7 +107,7 @@ $(GETTEXT_COMPILE): $(GETTEXT_DOWNLOAD) $(EXPAT_COMPILE) $(LIBICONV_COMPILE)
 		patch -p0 < $$p ; \
 	done
 	cd $(COMPILEDIR)/gettext-$(GETTEXT_VERSION) && \
-		./configure $(GETTEXT_FLAGS) && \
+		./configure $(GETTEXT_FLAGS) CFLAGS="$(CFLAGS)" CXXFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" && \
 		make -C gettext-tools && \
 		make -C gettext-tools install DESTDIR=$(STAGEDIR)
 	touch $@
