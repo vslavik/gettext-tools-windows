@@ -3,6 +3,8 @@ GETTEXT_VERSION  = 0.18.3.2
 LIBICONV_VERSION = 1.14
 EXPAT_VERSION    = 2.1.0
 
+# version of the gettext-tools-windows package; usually same as GETTEXT_VERSION
+PACKAGE_VERSION  = $(GETTEXT_VERSION)-1
 
 EXPAT_FLAGS       = --disable-static
 
@@ -35,7 +37,7 @@ STAGEDIR    = $(BUILDDIR)/stage
 USR_LOCAL   = $(STAGEDIR)/usr/local
 DISTDIR     = $(BUILDDIR)/dist
 
-ARCHIVE_FILE = $(BUILDDIR)/gettext-tools-windows-$(GETTEXT_VERSION).zip
+ARCHIVE_FILE = $(BUILDDIR)/gettext-tools-windows-$(PACKAGE_VERSION).zip
 
 EXPAT_FILE  := expat-$(EXPAT_VERSION).tar.gz
 EXPAT_URL   := http://downloads.sourceforge.net/project/expat/expat/$(EXPAT_VERSION)/$(EXPAT_FILE)
