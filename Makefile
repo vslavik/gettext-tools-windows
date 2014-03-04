@@ -21,7 +21,8 @@ GETTEXT_FLAGS     = --disable-static \
 					--disable-csharp \
 					--disable-java \
 					--enable-threads=win32 \
-					--enable-relocatable
+					--enable-relocatable \
+					ac_cv_func__set_invalid_parameter_handler=no
 
 
 PATCHESDIR  = $(CURDIR)/patches
