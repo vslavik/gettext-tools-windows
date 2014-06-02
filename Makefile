@@ -1,10 +1,10 @@
 
-GETTEXT_VERSION  = 0.18.3.2
+GETTEXT_VERSION  = 0.19
 LIBICONV_VERSION = 1.14
 EXPAT_VERSION    = 2.1.0
 
 # version of the gettext-tools-windows package; usually same as GETTEXT_VERSION
-PACKAGE_VERSION  = $(GETTEXT_VERSION)-1
+PACKAGE_VERSION  = $(GETTEXT_VERSION)
 
 EXPAT_FLAGS       = --disable-static
 
