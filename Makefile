@@ -59,7 +59,7 @@ GETTEXT_COMPILE  := $(COMPILEDIR)/GETTEXT.built
 GETTEXT_PATCHES  := $(wildcard $(PATCHESDIR)/gettext*)
 
 
-all: dist
+all: archive
 
 compile: $(GETTEXT_COMPILE)
 
