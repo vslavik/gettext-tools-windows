@@ -36,6 +36,6 @@ in the public domain.
 
 ---
 
-I'm @vslavik on Twitter and App.net
+I'm @vslavik on Twitter.
 
 https://github.com/vslavik/gettext-tools-windows
