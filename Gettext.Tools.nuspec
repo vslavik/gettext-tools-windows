@@ -8,7 +8,7 @@
         <licenseUrl>https://github.com/vslavik/gettext-tools-windows/blob/master/LICENSE</licenseUrl>
         <projectUrl>https://github.com/vslavik/gettext-tools-windows</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Windows build of GNU gettext tools (msgfmt, xgettext etc.).</description>
+        <description>Windows build of GNU gettext tools (msgfmt, xgettext etc.), maintained by Poedit developer.</description>
         <copyright>Copyright (C) Free Software Foundation, Inc. {http://fsf.org/}</copyright>
         <language>en-US</language>
         <tags>gnu gettext msgfmt xgettext msgmerge</tags>
