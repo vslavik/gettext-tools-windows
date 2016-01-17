@@ -3,15 +3,22 @@ GETTEXT_VERSION   = 0.19.7
 LIBICONV_VERSION  = 1.14
 
 # version of the gettext-tools-windows package; usually same as GETTEXT_VERSION
-PACKAGE_VERSION  = $(GETTEXT_VERSION)
+PACKAGE_VERSION   = $(GETTEXT_VERSION)
 
+# Awful trickery to undo MSYS's magical path conversion (see
+# http://www.mingw.org/wiki/Posix_path_conversion) which happens to break
+# gettext's executable relocation support.
+MSYS_PREFIX       = c:/usr/local
+UNIX_PREFIX       = /usr/local
 
-LIBICONV_FLAGS    = --disable-static \
+LIBICONV_FLAGS    = --prefix=$(MSYS_PREFIX) \
+					--disable-static \
 					--disable-dependency-tracking \
 					--disable-rpath \
 					--disable-nls
 
-GETTEXT_FLAGS     = --disable-static \
+GETTEXT_FLAGS     = --prefix=$(MSYS_PREFIX) \
+					--disable-static \
 					--disable-dependency-tracking \
 					--enable-silent-rules \
 					--with-libiconv-prefix=$(USR_LOCAL) \
@@ -66,7 +73,7 @@ $(LIBICONV_COMPILE): $(LIBICONV_DOWNLOAD)
 	cd $(COMPILEDIR)/libiconv-$(LIBICONV_VERSION) && \
 		./configure $(LIBICONV_FLAGS) CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" && \
 		make && \
-		make install DESTDIR=$(STAGEDIR)
+		make install DESTDIR=$(STAGEDIR) prefix=$(UNIX_PREFIX)
 	touch $@
 
 
@@ -86,7 +93,7 @@ $(GETTEXT_COMPILE): $(GETTEXT_DOWNLOAD) $(LIBICONV_COMPILE)
 	cd $(COMPILEDIR)/gettext-$(GETTEXT_VERSION) && \
 		./configure $(GETTEXT_FLAGS) CFLAGS="$(CFLAGS)" CXXFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" && \
 		make -C gettext-tools && \
-		make -C gettext-tools install DESTDIR=$(STAGEDIR)
+		make -C gettext-tools install DESTDIR=$(STAGEDIR) prefix=$(UNIX_PREFIX)
 	touch $@
 
 
