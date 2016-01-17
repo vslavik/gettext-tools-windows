@@ -1,12 +1,10 @@
 
-GETTEXT_VERSION  = 0.19.7
-LIBICONV_VERSION = 1.14
-EXPAT_VERSION    = 2.1.0
+GETTEXT_VERSION   = 0.19.7
+LIBICONV_VERSION  = 1.14
 
 # version of the gettext-tools-windows package; usually same as GETTEXT_VERSION
 PACKAGE_VERSION  = $(GETTEXT_VERSION)
 
-EXPAT_FLAGS       = --disable-static
 
 LIBICONV_FLAGS    = --disable-static \
 					--disable-dependency-tracking \
@@ -17,7 +15,6 @@ GETTEXT_FLAGS     = --disable-static \
 					--disable-dependency-tracking \
 					--enable-silent-rules \
 					--with-libiconv-prefix=$(USR_LOCAL) \
-					--with-libexpat-prefix=$(USR_LOCAL) \
 					--disable-rpath \
 					--disable-nls \
 					--disable-csharp \
@@ -39,17 +36,11 @@ DISTDIR     = $(BUILDDIR)/dist
 
 ARCHIVE_FILE = $(BUILDDIR)/gettext-tools-windows-$(PACKAGE_VERSION).zip
 
-EXPAT_FILE  := expat-$(EXPAT_VERSION).tar.gz
-EXPAT_URL   := http://downloads.sourceforge.net/project/expat/expat/$(EXPAT_VERSION)/$(EXPAT_FILE)
-
 LIBICONV_FILE := libiconv-$(LIBICONV_VERSION).tar.gz
 LIBICONV_URL  := http://ftp.gnu.org/pub/gnu/libiconv/$(LIBICONV_FILE)
 
 GETTEXT_FILE := gettext-$(GETTEXT_VERSION).tar.gz
 GETTEXT_URL  := http://ftp.gnu.org/pub/gnu/gettext/$(GETTEXT_FILE)
-
-EXPAT_DOWNLOAD := $(DOWNLOADDIR)/$(EXPAT_FILE)
-EXPAT_COMPILE  := $(COMPILEDIR)/EXPAT.built
 
 LIBICONV_DOWNLOAD := $(DOWNLOADDIR)/$(LIBICONV_FILE)
 LIBICONV_COMPILE  := $(COMPILEDIR)/LIBICONV.built
@@ -64,28 +55,12 @@ all: archive
 compile: $(GETTEXT_COMPILE)
 
 
-$(EXPAT_DOWNLOAD):
-	mkdir -p $(DOWNLOADDIR)
-	wget -O $@ $(EXPAT_URL)
-
-$(EXPAT_COMPILE): $(EXPAT_DOWNLOAD)
-	mkdir -p $(COMPILEDIR)/expat
-	mkdir -p $(STAGEDIR)
-	tar -C $(COMPILEDIR) -xzf $<
-	cd $(COMPILEDIR)/expat-$(EXPAT_VERSION) && \
-		./configure $(EXPAT_FLAGS) CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" && \
-		make && \
-		make install DESTDIR=$(STAGEDIR)
-	touch $@
-
-
-
 $(LIBICONV_DOWNLOAD):
 	mkdir -p $(DOWNLOADDIR)
 	wget -O $@ $(LIBICONV_URL)
 
 $(LIBICONV_COMPILE): $(LIBICONV_DOWNLOAD)
-	mkdir -p $(COMPILEDIR)/expat
+	mkdir -p $(COMPILEDIR)
 	mkdir -p $(STAGEDIR)
 	tar -C $(COMPILEDIR) -xzf $<
 	cd $(COMPILEDIR)/libiconv-$(LIBICONV_VERSION) && \
@@ -100,8 +75,8 @@ $(GETTEXT_DOWNLOAD):
 	mkdir -p $(DOWNLOADDIR)
 	wget -O $@ $(GETTEXT_URL)
 
-$(GETTEXT_COMPILE): $(GETTEXT_DOWNLOAD) $(EXPAT_COMPILE) $(LIBICONV_COMPILE)
-	mkdir -p $(COMPILEDIR)/expat
+$(GETTEXT_COMPILE): $(GETTEXT_DOWNLOAD) $(LIBICONV_COMPILE)
+	mkdir -p $(COMPILEDIR)
 	mkdir -p $(STAGEDIR)
 	tar -C $(COMPILEDIR) -xzf $<
 	cd $(COMPILEDIR)/gettext-$(GETTEXT_VERSION) && \
