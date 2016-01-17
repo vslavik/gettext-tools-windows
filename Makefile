@@ -92,7 +92,7 @@ $(GETTEXT_COMPILE): $(GETTEXT_DOWNLOAD) $(LIBICONV_COMPILE)
 
 dist: compile
 	rm -rf $(DISTDIR)
-	mkdir -p $(DISTDIR)/bin
+	mkdir -p $(DISTDIR)/{bin,lib/gettext,share,doc}
 	cp -a LICENSE $(DISTDIR)/license.txt
 	cp -a README.md $(DISTDIR)/readme.txt
 	cp -a $(USR_LOCAL)/bin/msg*.exe $(DISTDIR)/bin/
@@ -103,7 +103,8 @@ dist: compile
 	cp -a /mingw/bin/libstdc++*.dll $(DISTDIR)/bin
 	cp -a /mingw/bin/libgomp*.dll $(DISTDIR)/bin
 	cp -a /mingw/bin/pthreadGC2.dll $(DISTDIR)/bin
-	mkdir -p $(DISTDIR)/doc
+	cp -a $(USR_LOCAL)/lib/gettext/cldr-plurals.exe $(DISTDIR)/lib/gettext
+	cp -a $(USR_LOCAL)/share/gettext-$(GETTEXT_VERSION) $(DISTDIR)/share/gettext
 	cp -a $(USR_LOCAL)/share/doc/gettext/*.html $(DISTDIR)/doc/
 	strip --strip-all $(USR_LOCAL)/bin/*.dll $(USR_LOCAL)/bin/*.exe
 
