@@ -94,6 +94,7 @@ $(GETTEXT_COMPILE): $(GETTEXT_DOWNLOAD) $(LIBICONV_COMPILE)
 		./configure $(GETTEXT_FLAGS) CFLAGS="$(CFLAGS)" CXXFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" && \
 		make -C gettext-tools && \
 		make -C gettext-tools install DESTDIR=$(STAGEDIR) prefix=$(UNIX_PREFIX)
+	rm -f $(STAGEDIR)$(UNIX_PREFIX)/share/locale/locale.alias
 	touch $@
 
 
