@@ -14,7 +14,9 @@ How to build it
 ---------------
 
 The easiest way to use these tools is to just download the binaries or use the
-NuGet package. If you prefer to build it yourself, it's simple enough:
+`Gettext.Tools` [NuGet package](https://www.nuget.org/packages/Gettext.Tools/).
+
+If you prefer to build it yourself, it's simple enough:
 
 1. You need to have a recent version of MinGW installed, including the
    `mingw-get` tool.
