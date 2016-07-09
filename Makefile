@@ -116,6 +116,7 @@ dist: compile
 	cp -a /mingw/bin/pthreadGC2.dll $(DISTDIR)/bin
 	cp -a $(USR_LOCAL)/lib/gettext/cldr-plurals.exe $(DISTDIR)/lib/gettext
 	cp -a $(USR_LOCAL)/share/gettext-$(GETTEXT_VERSION_SHORT) $(DISTDIR)/share/gettext
+	cp -a $(USR_LOCAL)/share/gettext/styles $(DISTDIR)/share/gettext/
 	cp -a $(USR_LOCAL)/share/locale $(DISTDIR)/share/
 	cp -a $(USR_LOCAL)/share/doc/gettext/*.html $(DISTDIR)/doc/
 	strip --strip-all $(USR_LOCAL)/bin/*.dll $(USR_LOCAL)/bin/*.exe
