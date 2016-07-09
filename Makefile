@@ -1,9 +1,12 @@
 
-GETTEXT_VERSION   = 0.19.7
+GETTEXT_VERSION   = 0.19.8.1
 LIBICONV_VERSION  = 1.14
 
 # version of the gettext-tools-windows package; usually same as GETTEXT_VERSION
 PACKAGE_VERSION   = $(GETTEXT_VERSION)
+
+_space := $(subst ,, )
+GETTEXT_VERSION_SHORT := $(subst $(_space),.,$(wordlist 1,3,$(subst ., ,$(GETTEXT_VERSION))))
 
 # Awful trickery to undo MSYS's magical path conversion (see
 # http://www.mingw.org/wiki/Posix_path_conversion) which happens to break
@@ -112,7 +115,7 @@ dist: compile
 	cp -a /mingw/bin/libgomp*.dll $(DISTDIR)/bin
 	cp -a /mingw/bin/pthreadGC2.dll $(DISTDIR)/bin
 	cp -a $(USR_LOCAL)/lib/gettext/cldr-plurals.exe $(DISTDIR)/lib/gettext
-	cp -a $(USR_LOCAL)/share/gettext-$(GETTEXT_VERSION) $(DISTDIR)/share/gettext
+	cp -a $(USR_LOCAL)/share/gettext-$(GETTEXT_VERSION_SHORT) $(DISTDIR)/share/gettext
 	cp -a $(USR_LOCAL)/share/locale $(DISTDIR)/share/
 	cp -a $(USR_LOCAL)/share/doc/gettext/*.html $(DISTDIR)/doc/
 	strip --strip-all $(USR_LOCAL)/bin/*.dll $(USR_LOCAL)/bin/*.exe
