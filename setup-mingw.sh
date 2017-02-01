@@ -13,6 +13,7 @@ PACKAGES="msys-wget
           msys-make
           gcc
           g++
+          mingw32-libz-dev
          "
 
 mingw-get install $PACKAGES
