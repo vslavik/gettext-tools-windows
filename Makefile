@@ -1,6 +1,6 @@
 
 GETTEXT_VERSION   = 0.19.8.1
-LIBICONV_VERSION  = 1.14
+LIBICONV_VERSION  = 1.16
 
 # version of the gettext-tools-windows package; usually same as GETTEXT_VERSION
 PACKAGE_VERSION   = $(GETTEXT_VERSION)
