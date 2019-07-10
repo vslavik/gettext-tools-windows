@@ -3,67 +3,66 @@ set to override console codepage autodetection. This is particularly useful
 when redirecting the output to a pipe (console CP detection fails) and using
 localized messages. Inspired by Python's PYTHONIOENCODING.
 
-diff -ru gettext-0.19.7-orig/gettext-runtime/gnulib-lib/localcharset.c gettext-0.19.7/gettext-runtime/gnulib-lib/localcharset.c
---- gettext-0.19.7-orig/gettext-runtime/gnulib-lib/localcharset.c	2015-12-28 00:08:01.000000000 +0100
-+++ gettext-0.19.7/gettext-runtime/gnulib-lib/localcharset.c	2016-01-19 09:34:56.000000000 +0100
-@@ -395,6 +395,12 @@
+--- a/gettext-runtime/gnulib-lib/localcharset.c
++++ b/gettext-runtime/gnulib-lib/localcharset.c
+@@ -688,6 +688,12 @@ locale_charset (void)
+ {
    const char *codeset;
-   const char *aliases;
  
 +  /* Force output encoding, particularly useful for redirected output on win32
 +     where charset detection fails when no actual console is attached. */
 +  const char *forced_encoding = getenv("GETTEXTIOENCODING");
 +  if (forced_encoding)
-+      return forced_encoding;
++    return forced_encoding;
 +
- #if !(defined WINDOWS_NATIVE || defined OS2)
+ #if HAVE_LANGINFO_CODESET || defined WINDOWS_NATIVE || defined OS2
  
  # if HAVE_LANGINFO_CODESET
-diff -ru gettext-0.19.7-orig/gettext-runtime/intl/localcharset.c gettext-0.19.7/gettext-runtime/intl/localcharset.c
---- gettext-0.19.7-orig/gettext-runtime/intl/localcharset.c	2015-01-24 08:21:24.000000000 +0100
-+++ gettext-0.19.7/gettext-runtime/intl/localcharset.c	2016-01-19 09:35:03.000000000 +0100
-@@ -395,6 +395,12 @@
+
+--- a/gettext-runtime/intl/localcharset.c
++++ b/gettext-runtime/intl/localcharset.c
+@@ -688,6 +688,12 @@ locale_charset (void)
+ {
    const char *codeset;
-   const char *aliases;
  
 +  /* Force output encoding, particularly useful for redirected output on win32
 +     where charset detection fails when no actual console is attached. */
 +  const char *forced_encoding = getenv("GETTEXTIOENCODING");
 +  if (forced_encoding)
-+      return forced_encoding;
++    return forced_encoding;
 +
- #if !(defined WINDOWS_NATIVE || defined OS2)
+ #if HAVE_LANGINFO_CODESET || defined WINDOWS_NATIVE || defined OS2
  
  # if HAVE_LANGINFO_CODESET
-diff -ru gettext-0.19.7-orig/gettext-tools/gnulib-lib/localcharset.c gettext-0.19.7/gettext-tools/gnulib-lib/localcharset.c
---- gettext-0.19.7-orig/gettext-tools/gnulib-lib/localcharset.c	2015-12-28 00:08:31.000000000 +0100
-+++ gettext-0.19.7/gettext-tools/gnulib-lib/localcharset.c	2016-01-19 09:35:16.000000000 +0100
-@@ -395,6 +395,12 @@
+
+--- a/gettext-tools/gnulib-lib/localcharset.c
++++ b/gettext-tools/gnulib-lib/localcharset.c
+@@ -688,6 +688,12 @@ locale_charset (void)
+ {
    const char *codeset;
-   const char *aliases;
  
 +  /* Force output encoding, particularly useful for redirected output on win32
 +     where charset detection fails when no actual console is attached. */
 +  const char *forced_encoding = getenv("GETTEXTIOENCODING");
 +  if (forced_encoding)
-+      return forced_encoding;
++    return forced_encoding;
 +
- #if !(defined WINDOWS_NATIVE || defined OS2)
+ #if HAVE_LANGINFO_CODESET || defined WINDOWS_NATIVE || defined OS2
  
  # if HAVE_LANGINFO_CODESET
-diff -ru gettext-0.19.7-orig/gettext-tools/libgettextpo/localcharset.c gettext-0.19.7/gettext-tools/libgettextpo/localcharset.c
---- gettext-0.19.7-orig/gettext-tools/libgettextpo/localcharset.c	2015-12-28 00:09:03.000000000 +0100
-+++ gettext-0.19.7/gettext-tools/libgettextpo/localcharset.c	2016-01-19 09:35:21.000000000 +0100
-@@ -395,6 +395,12 @@
+
+--- a/gettext-tools/libgettextpo/localcharset.c
++++ b/gettext-tools/libgettextpo/localcharset.c
+@@ -688,6 +688,12 @@ locale_charset (void)
+ {
    const char *codeset;
-   const char *aliases;
  
 +  /* Force output encoding, particularly useful for redirected output on win32
 +     where charset detection fails when no actual console is attached. */
 +  const char *forced_encoding = getenv("GETTEXTIOENCODING");
 +  if (forced_encoding)
-+      return forced_encoding;
++    return forced_encoding;
 +
- #if !(defined WINDOWS_NATIVE || defined OS2)
+ #if HAVE_LANGINFO_CODESET || defined WINDOWS_NATIVE || defined OS2
  
  # if HAVE_LANGINFO_CODESET

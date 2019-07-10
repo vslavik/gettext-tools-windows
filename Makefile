@@ -1,12 +1,12 @@
 
-GETTEXT_VERSION   = 0.19.8.1
+GETTEXT_VERSION   = 0.20.1
 LIBICONV_VERSION  = 1.16
 
 # version of the gettext-tools-windows package; usually same as GETTEXT_VERSION
 PACKAGE_VERSION   = $(GETTEXT_VERSION)
 
 _space := $(subst ,, )
-GETTEXT_VERSION_SHORT := $(subst $(_space),.,$(wordlist 1,3,$(subst ., ,$(GETTEXT_VERSION))))
+GETTEXT_VERSION_SHORT := $(subst $(_space),.,$(wordlist 1,2,$(subst ., ,$(GETTEXT_VERSION))))
 
 # Awful trickery to undo MSYS's magical path conversion (see
 # http://www.mingw.org/wiki/Posix_path_conversion) which happens to break
@@ -29,7 +29,7 @@ GETTEXT_FLAGS     = --prefix=$(MSYS_PREFIX) \
 					--enable-nls \
 					--disable-csharp \
 					--disable-java \
-					--enable-threads=win32 \
+					--enable-threads=windows \
 					--enable-relocatable \
 					ac_cv_func__set_invalid_parameter_handler=no
 
@@ -101,12 +101,14 @@ $(GETTEXT_COMPILE): $(GETTEXT_DOWNLOAD) $(LIBICONV_COMPILE)
 	done
 	cd $(COMPILEDIR)/gettext-$(GETTEXT_VERSION) && \
 		./configure $(GETTEXT_FLAGS) CFLAGS="$(CFLAGS)" CXXFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" && \
+		make -C libtextstyle && \
 		make -C gettext-tools
 	touch $@
 
 $(GETTEXT_STAGE): $(GETTEXT_COMPILE) $(LIBICONV_STAGE)
 	mkdir -p $(STAGEDIR)
 	cd $(COMPILEDIR)/gettext-$(GETTEXT_VERSION) && \
+		make -C libtextstyle install DESTDIR=$(STAGEDIR) prefix=$(UNIX_PREFIX) && \
 		make -C gettext-tools install DESTDIR=$(STAGEDIR) prefix=$(UNIX_PREFIX)
 	rm -f $(STAGEDIR)$(UNIX_PREFIX)/share/locale/locale.alias
 	touch $@
