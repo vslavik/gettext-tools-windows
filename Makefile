@@ -130,7 +130,7 @@ dist: stage
 	cp -a $(USR_LOCAL)/share/gettext/styles $(DISTDIR)/share/gettext/
 	cp -a $(USR_LOCAL)/share/locale $(DISTDIR)/share/
 	cp -a $(USR_LOCAL)/share/doc/gettext/*.html $(DISTDIR)/doc/
-	strip --strip-all $(USR_LOCAL)/bin/*.dll $(USR_LOCAL)/bin/*.exe
+	strip --strip-all $(DISTDIR)/bin/*.dll $(DISTDIR)/bin/*.exe
 
 
 archive: dist
