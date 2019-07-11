@@ -54,15 +54,18 @@ GETTEXT_URL  := http://ftp.gnu.org/pub/gnu/gettext/$(GETTEXT_FILE)
 
 LIBICONV_DOWNLOAD := $(DOWNLOADDIR)/$(LIBICONV_FILE)
 LIBICONV_COMPILE  := $(COMPILEDIR)/LIBICONV.built
+LIBICONV_STAGE    := $(COMPILEDIR)/LIBICONV.staged
 
 GETTEXT_DOWNLOAD := $(DOWNLOADDIR)/$(GETTEXT_FILE)
 GETTEXT_COMPILE  := $(COMPILEDIR)/GETTEXT.built
 GETTEXT_PATCHES  := $(wildcard $(PATCHESDIR)/gettext*)
+GETTEXT_STAGE    := $(COMPILEDIR)/GETTEXT.staged
 
 
 all: archive
 
-compile: $(GETTEXT_COMPILE)
+compile: $(LIBICONV_COMPILE) $(GETTEXT_COMPILE)
+stage: $(LIBICONV_STAGE) $(GETTEXT_STAGE)
 
 
 $(LIBICONV_DOWNLOAD):
@@ -71,11 +74,15 @@ $(LIBICONV_DOWNLOAD):
 
 $(LIBICONV_COMPILE): $(LIBICONV_DOWNLOAD)
 	mkdir -p $(COMPILEDIR)
-	mkdir -p $(STAGEDIR)
 	tar -C $(COMPILEDIR) -xzf $<
 	cd $(COMPILEDIR)/libiconv-$(LIBICONV_VERSION) && \
 		./configure $(LIBICONV_FLAGS) CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" && \
-		make && \
+		make
+	touch $@
+
+$(LIBICONV_STAGE): $(LIBICONV_COMPILE)
+	mkdir -p $(STAGEDIR)
+	cd $(COMPILEDIR)/libiconv-$(LIBICONV_VERSION) && \
 		make install DESTDIR=$(STAGEDIR) prefix=$(UNIX_PREFIX)
 	touch $@
 
@@ -87,7 +94,6 @@ $(GETTEXT_DOWNLOAD):
 
 $(GETTEXT_COMPILE): $(GETTEXT_DOWNLOAD) $(LIBICONV_COMPILE)
 	mkdir -p $(COMPILEDIR)
-	mkdir -p $(STAGEDIR)
 	tar -C $(COMPILEDIR) -xzf $<
 	cd $(COMPILEDIR)/gettext-$(GETTEXT_VERSION) && \
 	for p in $(GETTEXT_PATCHES) ; do \
@@ -95,13 +101,18 @@ $(GETTEXT_COMPILE): $(GETTEXT_DOWNLOAD) $(LIBICONV_COMPILE)
 	done
 	cd $(COMPILEDIR)/gettext-$(GETTEXT_VERSION) && \
 		./configure $(GETTEXT_FLAGS) CFLAGS="$(CFLAGS)" CXXFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" && \
-		make -C gettext-tools && \
+		make -C gettext-tools
+	touch $@
+
+$(GETTEXT_STAGE): $(GETTEXT_COMPILE) $(LIBICONV_STAGE)
+	mkdir -p $(STAGEDIR)
+	cd $(COMPILEDIR)/gettext-$(GETTEXT_VERSION) && \
 		make -C gettext-tools install DESTDIR=$(STAGEDIR) prefix=$(UNIX_PREFIX)
 	rm -f $(STAGEDIR)$(UNIX_PREFIX)/share/locale/locale.alias
 	touch $@
 
 
-dist: compile
+dist: stage
 	rm -rf $(DISTDIR)
 	mkdir -p $(DISTDIR)/{bin,lib/gettext,share,doc}
 	cp -a LICENSE $(DISTDIR)/license.txt
@@ -129,4 +140,4 @@ archive: dist
 clean:
 	rm -rf $(BUILDDIR)
 
-.PHONY: all clean compile dist archive
+.PHONY: all clean compile stage dist archive
