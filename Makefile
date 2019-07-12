@@ -123,10 +123,10 @@ dist: stage
 	cp -a $(USR_LOCAL)/bin/recode-sr-latin.exe $(DISTDIR)/bin/
 	cp -a $(USR_LOCAL)/bin/xgettext.exe $(DISTDIR)/bin/
 	cp -a $(USR_LOCAL)/bin/*.dll $(DISTDIR)/bin/
-	cp -a /mingw/bin/libgcc_s_dw*.dll $(DISTDIR)/bin
-	cp -a /mingw/bin/libstdc++*.dll $(DISTDIR)/bin
-	cp -a /mingw/bin/libgomp*.dll $(DISTDIR)/bin
-	cp -a /mingw/bin/pthreadGC2.dll $(DISTDIR)/bin
+	cp -a /mingw32/bin/libgcc_s_dw*.dll $(DISTDIR)/bin
+	cp -a /mingw32/bin/libstdc++*.dll $(DISTDIR)/bin
+	cp -a /mingw32/bin/libgomp*.dll $(DISTDIR)/bin
+	cp -a /mingw32/bin/libwinpthread*.dll $(DISTDIR)/bin
 	cp -a $(USR_LOCAL)/lib/gettext/cldr-plurals.exe $(DISTDIR)/lib/gettext
 	cp -a $(USR_LOCAL)/share/gettext-$(GETTEXT_VERSION_SHORT) $(DISTDIR)/share/gettext
 	cp -a $(USR_LOCAL)/share/gettext/styles $(DISTDIR)/share/gettext/
