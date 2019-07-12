@@ -3,6 +3,12 @@ set to override console codepage autodetection. This is particularly useful
 when redirecting the output to a pipe (console CP detection fails) and using
 localized messages. Inspired by Python's PYTHONIOENCODING.
 
+WARNING!
+
+This is considered deprecated. Use OUTPUT_CHARSET variable instead.
+See https://lists.gnu.org/archive/html/bug-gettext/2019-04/msg00055.html
+
+
 --- a/gettext-runtime/gnulib-lib/localcharset.c
 +++ b/gettext-runtime/gnulib-lib/localcharset.c
 @@ -688,6 +688,12 @@ locale_charset (void)
