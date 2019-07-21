@@ -45,6 +45,7 @@ USR_LOCAL   = $(STAGEDIR)/usr/local
 DISTDIR     = $(BUILDDIR)/dist
 
 ARCHIVE_FILE = $(BUILDDIR)/gettext-tools-windows-$(PACKAGE_VERSION).zip
+NUGET_FILE   = $(BUILDDIR)/Gettext.Tools.$(PACKAGE_VERSION).nupkg
 
 LIBICONV_FILE := libiconv-$(LIBICONV_VERSION).tar.gz
 LIBICONV_URL  := http://ftp.gnu.org/pub/gnu/libiconv/$(LIBICONV_FILE)
@@ -139,7 +140,14 @@ archive: dist
 	rm -f $(ARCHIVE_FILE)
 	cd $(DISTDIR) && zip -9 -r $(ARCHIVE_FILE) *
 
+$(NUGET_FILE): Gettext.Tools.nuspec dist
+	rm -f $@
+	nuget pack Gettext.Tools.nuspec -OutputDirectory $(BUILDDIR)
+
+nuget-push: $(NUGET_FILE)
+	nuget push $(NUGET_FILE) -Source https://www.nuget.org/api/v2/package
+
 clean:
 	rm -rf $(BUILDDIR)
 
-.PHONY: all clean compile stage dist archive
+.PHONY: all clean compile stage dist archive nuget-push
