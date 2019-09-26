@@ -3,7 +3,9 @@ GETTEXT_VERSION   = 0.20.1
 LIBICONV_VERSION  = 1.16
 
 # version of the gettext-tools-windows package; usually same as GETTEXT_VERSION
-PACKAGE_VERSION   = $(GETTEXT_VERSION)
+# use "-n" suffix; for NuGet, use ".00n" suffix instead, e.g. 0.20.1-1 and 0.20.1.001
+PACKAGE_VERSION   = $(GETTEXT_VERSION)-1
+NUGET_VERSION     = $(GETTEXT_VERSION).001
 
 _space := $(subst ,, )
 GETTEXT_VERSION_SHORT := $(subst $(_space),.,$(wordlist 1,2,$(subst ., ,$(GETTEXT_VERSION))))
@@ -45,7 +47,7 @@ USR_LOCAL   = $(STAGEDIR)/usr/local
 DISTDIR     = $(BUILDDIR)/dist
 
 ARCHIVE_FILE = $(BUILDDIR)/gettext-tools-windows-$(PACKAGE_VERSION).zip
-NUGET_FILE   = $(BUILDDIR)/Gettext.Tools.$(PACKAGE_VERSION).nupkg
+NUGET_FILE   = $(BUILDDIR)/Gettext.Tools.$(NUGET_VERSION).nupkg
 
 LIBICONV_FILE := libiconv-$(LIBICONV_VERSION).tar.gz
 LIBICONV_URL  := http://ftp.gnu.org/pub/gnu/libiconv/$(LIBICONV_FILE)
