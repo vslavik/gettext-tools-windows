@@ -3,9 +3,9 @@ GETTEXT_VERSION   = 0.20.1
 LIBICONV_VERSION  = 1.16
 
 # version of the gettext-tools-windows package; usually same as GETTEXT_VERSION
-# use "-n" suffix; for NuGet, use ".00n" suffix instead, e.g. 0.20.1-1 and 0.20.1.001
+# use "-n" suffix; for NuGet, use ".n" suffix instead, e.g. 0.20.1-1 and 0.20.1.1
 PACKAGE_VERSION   = $(GETTEXT_VERSION)-1
-NUGET_VERSION     = $(GETTEXT_VERSION).001
+NUGET_VERSION     = $(GETTEXT_VERSION).1
 
 _space := $(subst ,, )
 GETTEXT_VERSION_SHORT := $(subst $(_space),.,$(wordlist 1,2,$(subst ., ,$(GETTEXT_VERSION))))
