@@ -37,6 +37,7 @@ GETTEXT_FLAGS     = --prefix=$(MSYS_PREFIX) \
 
 CFLAGS  := -O2
 LDFLAGS := -Wl,--dynamicbase -Wl,--nxcompat -Wl,--no-seh
+NUGET   ?= nuget
 
 PATCHESDIR  = $(CURDIR)/patches
 BUILDDIR    = $(CURDIR)/build
@@ -144,12 +145,14 @@ archive: dist
 
 $(NUGET_FILE): Gettext.Tools.nuspec dist
 	rm -f $@
-	nuget pack Gettext.Tools.nuspec -OutputDirectory $(BUILDDIR)
+	$(NUGET) pack Gettext.Tools.nuspec -OutputDirectory $(BUILDDIR)
+
+nuget: $(NUGET_FILE)
 
 nuget-push: $(NUGET_FILE)
-	nuget push $(NUGET_FILE) -Source https://www.nuget.org/api/v2/package
+	$(NUGET) push $(NUGET_FILE) -Source https://www.nuget.org/api/v2/package
 
 clean:
 	rm -rf $(BUILDDIR)
 
-.PHONY: all clean compile stage dist archive nuget-push
+.PHONY: all clean compile stage dist archive nuget nuget-push

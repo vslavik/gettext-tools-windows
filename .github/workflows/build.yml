@@ -1,0 +1,81 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    - name: Setup MSYS2 environment
+      uses: numworks/setup-msys2@v1
+      with:
+        msystem: MINGW32
+        update: true
+
+    # Update again. Needed to actually get all updates.
+    - name: Update MSYS2
+      run: msys2do pacman --noconfirm -Syuu
+
+    - name: Install packages for dependencies
+      run: msys2do pacman --noconfirm -S --needed mingw-w64-i686-gcc automake autoconf pkg-config make zip patch tar
+
+    - name: Build binaries
+      run: msys2do make
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: zip-archive
+        path: build/gettext-tools*.zip
+
+    - uses: nuget/setup-nuget@v1
+
+    - name: Build NuGet package
+      run: msys2do make nuget
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: nuget-package
+        path: build/*.nupkg
+
+
+  publish-release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: windows-latest
+    needs: build
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: zip-archive
+
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "*.zip"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+
+  publish-nuget:
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: windows-latest
+    needs: build
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: nuget-package
+
+      - uses: actions/setup-dotnet@v1
+        with:
+          source-url: https://www.nuget.org/api/v2/package/
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.NUGET_API_KEY }}
+
+      - uses: nuget/setup-nuget@v1
+        with:
+          nuget-api-key: ${{ secrets.NUGET_API_KEY }}
+          nuget-api-key-source: https://www.nuget.org/api/v2/package
+
+      - name: Publish NuGet package
+        run: nuget push *.nupkg -Source https://www.nuget.org/api/v2/package
