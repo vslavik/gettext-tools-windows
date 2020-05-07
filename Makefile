@@ -7,9 +7,6 @@ LIBICONV_VERSION  = 1.16
 PACKAGE_VERSION   = $(GETTEXT_VERSION)
 NUGET_VERSION     = $(GETTEXT_VERSION)
 
-_space := $(subst ,, )
-GETTEXT_VERSION_SHORT := $(subst $(_space),.,$(wordlist 1,2,$(subst ., ,$(GETTEXT_VERSION))))
-
 # Awful trickery to undo MSYS's magical path conversion (see
 # http://www.mingw.org/wiki/Posix_path_conversion) which happens to break
 # gettext's executable relocation support.
@@ -132,7 +129,7 @@ dist: stage
 	cp -a /mingw32/bin/libgomp*.dll $(DISTDIR)/bin
 	cp -a /mingw32/bin/libwinpthread*.dll $(DISTDIR)/bin
 	cp -a $(USR_LOCAL)/lib/gettext/cldr-plurals.exe $(DISTDIR)/lib/gettext
-	cp -a $(USR_LOCAL)/share/gettext-$(GETTEXT_VERSION_SHORT) $(DISTDIR)/share/gettext
+	cp -a $(USR_LOCAL)/share/gettext-$(GETTEXT_VERSION) $(DISTDIR)/share/gettext
 	cp -a $(USR_LOCAL)/share/gettext/styles $(DISTDIR)/share/gettext/
 	cp -a $(USR_LOCAL)/share/locale $(DISTDIR)/share/
 	cp -a $(USR_LOCAL)/share/doc/gettext/*.html $(DISTDIR)/doc/
