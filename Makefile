@@ -78,13 +78,13 @@ $(LIBICONV_COMPILE): $(LIBICONV_DOWNLOAD)
 	tar -C $(COMPILEDIR) -xzf $<
 	cd $(COMPILEDIR)/libiconv-$(LIBICONV_VERSION) && \
 		./configure $(LIBICONV_FLAGS) CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" && \
-		make
+		$(MAKE)
 	touch $@
 
 $(LIBICONV_STAGE): $(LIBICONV_COMPILE)
 	mkdir -p $(STAGEDIR)
 	cd $(COMPILEDIR)/libiconv-$(LIBICONV_VERSION) && \
-		make install DESTDIR=$(STAGEDIR) prefix=$(UNIX_PREFIX)
+		$(MAKE) install DESTDIR=$(STAGEDIR) prefix=$(UNIX_PREFIX)
 	touch $@
 
 
@@ -102,15 +102,15 @@ $(GETTEXT_COMPILE): $(GETTEXT_DOWNLOAD) $(LIBICONV_COMPILE)
 	done
 	cd $(COMPILEDIR)/gettext-$(GETTEXT_VERSION) && \
 		./configure $(GETTEXT_FLAGS) CFLAGS="$(CFLAGS)" CXXFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" && \
-		make -C libtextstyle && \
-		make -C gettext-tools
+		$(MAKE) -C libtextstyle && \
+		$(MAKE) -C gettext-tools
 	touch $@
 
 $(GETTEXT_STAGE): $(GETTEXT_COMPILE) $(LIBICONV_STAGE)
 	mkdir -p $(STAGEDIR)
 	cd $(COMPILEDIR)/gettext-$(GETTEXT_VERSION) && \
-		make -C libtextstyle install DESTDIR=$(STAGEDIR) prefix=$(UNIX_PREFIX) && \
-		make -C gettext-tools install DESTDIR=$(STAGEDIR) prefix=$(UNIX_PREFIX)
+		$(MAKE) -C libtextstyle install DESTDIR=$(STAGEDIR) prefix=$(UNIX_PREFIX) && \
+		$(MAKE) -C gettext-tools install DESTDIR=$(STAGEDIR) prefix=$(UNIX_PREFIX)
 	rm -f $(STAGEDIR)$(UNIX_PREFIX)/share/locale/locale.alias
 	touch $@
 

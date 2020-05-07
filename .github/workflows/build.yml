@@ -24,7 +24,7 @@ jobs:
       run: msys2do pacman --noconfirm -S --needed mingw-w64-i686-gcc automake autoconf pkg-config make zip patch tar
 
     - name: Build binaries
-      run: msys2do make
+      run: msys2do make -j2 MAKE="make -j2"
 
     - uses: actions/upload-artifact@v2
       with:
