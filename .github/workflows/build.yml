@@ -53,6 +53,8 @@ jobs:
 
       - uses: ncipollo/release-action@v1
         with:
+          allowUpdates: true
+          prerelease: true
           artifacts: "*.zip"
           token: ${{ secrets.GITHUB_TOKEN }}
 
