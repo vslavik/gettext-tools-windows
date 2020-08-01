@@ -6,25 +6,23 @@ jobs:
   build:
     runs-on: windows-latest
 
+    defaults:
+      run:
+        shell: msys2 {0}
+
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
     - name: Setup MSYS2 environment
-      uses: numworks/setup-msys2@v1
+      uses: msys2/setup-msys2@v2
       with:
         msystem: MINGW32
         update: true
-
-    # Update again. Needed to actually get all updates.
-    - name: Update MSYS2
-      run: msys2do pacman --noconfirm -Syuu
-
-    - name: Install packages for dependencies
-      run: msys2do pacman --noconfirm -S --needed mingw-w64-i686-gcc automake autoconf pkg-config make zip patch tar
+        install: mingw-w64-i686-gcc automake autoconf pkg-config make zip patch tar
 
     - name: Build binaries
-      run: msys2do make -j2 MAKE="make -j2"
+      run: make -j2 MAKE="make -j2"
 
     - uses: actions/upload-artifact@v2
       with:
@@ -34,7 +32,7 @@ jobs:
     - uses: nuget/setup-nuget@v1
 
     - name: Build NuGet package
-      run: msys2do make nuget
+      run: make nuget
 
     - uses: actions/upload-artifact@v2
       with:
