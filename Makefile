@@ -1,11 +1,11 @@
 
-GETTEXT_VERSION   = 0.21
+GETTEXT_VERSION   = 0.21.1
 LIBICONV_VERSION  = 1.16
 
 # version of the gettext-tools-windows package; usually same as GETTEXT_VERSION
 # use "-n" suffix; for NuGet, use ".n" suffix instead, e.g. 0.20.1-1 and 0.20.1.1
-PACKAGE_VERSION   = $(GETTEXT_VERSION)-1
-NUGET_VERSION     = $(GETTEXT_VERSION).0.1
+PACKAGE_VERSION   = $(GETTEXT_VERSION)
+NUGET_VERSION     = $(GETTEXT_VERSION)
 
 # Awful trickery to undo MSYS's magical path conversion (see
 # http://www.mingw.org/wiki/Posix_path_conversion) which happens to break
