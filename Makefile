@@ -98,7 +98,7 @@ $(GETTEXT_COMPILE): $(GETTEXT_DOWNLOAD) $(LIBICONV_COMPILE)
 	tar -C $(COMPILEDIR) -xzf $<
 	cd $(COMPILEDIR)/gettext-$(GETTEXT_VERSION) && \
 	for p in $(GETTEXT_PATCHES) ; do \
-		patch -p1 < $$p ; \
+		patch -p1 < $$p || exit 1 ; \
 	done
 	cd $(COMPILEDIR)/gettext-$(GETTEXT_VERSION) && \
 		./configure $(GETTEXT_FLAGS) CFLAGS="$(CFLAGS)" CXXFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" && \
