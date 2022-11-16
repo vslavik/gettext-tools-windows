@@ -29,8 +29,7 @@ GETTEXT_FLAGS     = --prefix=$(MSYS_PREFIX) \
 					--disable-csharp \
 					--disable-java \
 					--enable-threads=windows \
-					--enable-relocatable \
-					ac_cv_func__set_invalid_parameter_handler=no
+					--enable-relocatable
 
 CFLAGS  := -O2
 LDFLAGS := -Wl,--dynamicbase -Wl,--nxcompat -Wl,--no-seh
