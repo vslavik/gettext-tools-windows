@@ -1,11 +1,11 @@
 
-GETTEXT_VERSION   = 0.21
+GETTEXT_VERSION   = 0.21.1
 LIBICONV_VERSION  = 1.16
 
 # version of the gettext-tools-windows package; usually same as GETTEXT_VERSION
 # use "-n" suffix; for NuGet, use ".n" suffix instead, e.g. 0.20.1-1 and 0.20.1.1
-PACKAGE_VERSION   = $(GETTEXT_VERSION)-1
-NUGET_VERSION     = $(GETTEXT_VERSION).0.1
+PACKAGE_VERSION   = $(GETTEXT_VERSION)
+NUGET_VERSION     = $(GETTEXT_VERSION)
 
 # Awful trickery to undo MSYS's magical path conversion (see
 # http://www.mingw.org/wiki/Posix_path_conversion) which happens to break
@@ -29,8 +29,7 @@ GETTEXT_FLAGS     = --prefix=$(MSYS_PREFIX) \
 					--disable-csharp \
 					--disable-java \
 					--enable-threads=windows \
-					--enable-relocatable \
-					ac_cv_func__set_invalid_parameter_handler=no
+					--enable-relocatable
 
 CFLAGS  := -O2
 LDFLAGS := -Wl,--dynamicbase -Wl,--nxcompat -Wl,--no-seh
@@ -98,10 +97,10 @@ $(GETTEXT_COMPILE): $(GETTEXT_DOWNLOAD) $(LIBICONV_COMPILE)
 	tar -C $(COMPILEDIR) -xzf $<
 	cd $(COMPILEDIR)/gettext-$(GETTEXT_VERSION) && \
 	for p in $(GETTEXT_PATCHES) ; do \
-		patch -p1 < $$p ; \
+		patch -p1 < $$p || exit 1 ; \
 	done
 	cd $(COMPILEDIR)/gettext-$(GETTEXT_VERSION) && \
-		./configure $(GETTEXT_FLAGS) CFLAGS="$(CFLAGS)" CXXFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" && \
+		./configure -C $(GETTEXT_FLAGS) CFLAGS="$(CFLAGS)" CXXFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" && \
 		$(MAKE) -C libtextstyle && \
 		$(MAKE) -C gettext-tools
 	touch $@
