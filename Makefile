@@ -100,9 +100,8 @@ $(GETTEXT_COMPILE): $(GETTEXT_DOWNLOAD) $(LIBICONV_COMPILE)
 		patch -p1 < $$p || exit 1 ; \
 	done
 	cd $(COMPILEDIR)/gettext-$(GETTEXT_VERSION) && \
-		./configure -C $(GETTEXT_FLAGS) CFLAGS="$(CFLAGS)" CXXFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" && \
-		$(MAKE) -C libtextstyle && \
-		$(MAKE) -C gettext-tools
+		./configure -C $(GETTEXT_FLAGS) CFLAGS="$(CFLAGS)" CXXFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)"
+	$(MAKE) -C $(COMPILEDIR)/gettext-$(GETTEXT_VERSION)
 	touch $@
 
 $(GETTEXT_STAGE): $(GETTEXT_COMPILE) $(LIBICONV_STAGE)
