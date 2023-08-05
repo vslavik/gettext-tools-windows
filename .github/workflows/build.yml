@@ -12,7 +12,7 @@ jobs:
 
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: Setup MSYS2 environment
       uses: msys2/setup-msys2@v2
@@ -24,7 +24,7 @@ jobs:
     - name: Build binaries
       run: make -j2 MAKE="make -j2"
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: zip-archive
         path: build/gettext-tools*.zip
@@ -34,7 +34,7 @@ jobs:
     - name: Build NuGet package
       run: make nuget
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: nuget-package
         path: build/*.nupkg
@@ -45,7 +45,7 @@ jobs:
     runs-on: windows-latest
     needs: build
     steps:
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: zip-archive
 
@@ -62,7 +62,7 @@ jobs:
     runs-on: windows-latest
     needs: build
     steps:
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: nuget-package
 
