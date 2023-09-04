@@ -45,10 +45,13 @@ STAGEDIR    = $(BUILDDIR)/stage
 USR_LOCAL   = $(STAGEDIR)/usr/local
 DISTDIR     = $(BUILDDIR)/dist
 
-NUGET_CSPROJ_FILE = $(NETSRCDIR)/Gettext.Tools/Gettext.Tools.csproj
+NUGET_CSPROJ_FILE      = $(NETSRCDIR)/Gettext.Tools/Gettext.Tools.csproj
+NUGET_TOOL_CSPROJ_FILE = $(NETSRCDIR)/Gettext.Tools.DotNetTool/Gettext.Tools.DotNetTool.csproj
 
-ARCHIVE_FILE = $(BUILDDIR)/gettext-tools-windows-$(PACKAGE_VERSION).zip
-NUGET_FILE   = $(BUILDDIR)/Gettext.Tools.$(NUGET_VERSION).nupkg
+
+ARCHIVE_FILE    = $(BUILDDIR)/gettext-tools-windows-$(PACKAGE_VERSION).zip
+NUGET_FILE      = $(BUILDDIR)/Gettext.Tools.$(NUGET_VERSION).nupkg
+NUGET_TOOL_FILE = $(BUILDDIR)/Gettext.Tools.DotNetTool.$(NUGET_VERSION).nupkg
 
 LIBICONV_FILE := libiconv-$(LIBICONV_VERSION).tar.gz
 LIBICONV_URL  := http://ftp.gnu.org/pub/gnu/libiconv/$(LIBICONV_FILE)
@@ -147,7 +150,11 @@ $(NUGET_FILE): Directory.Build.props dist
 	rm -f $@
 	$(DOTNET) pack $(NUGET_CSPROJ_FILE) --output $(BUILDDIR)
 
-nuget: $(NUGET_FILE)
+$(NUGET_TOOL_FILE): Directory.Build.props dist
+	rm -f $@
+	$(DOTNET) pack $(NUGET_TOOL_CSPROJ_FILE) --output $(BUILDDIR) --configuration Release
+
+nuget: $(NUGET_FILE) $(NUGET_TOOL_FILE)
 
 nuget-push: $(NUGET_FILE)
 	$(NUGET) push $(NUGET_FILE) -Source https://www.nuget.org/api/v2/package
