@@ -1,2 +1,6 @@
 /build/
 Gettext.Tools.*.nupkg
+
+src/**/.vs
+src/**/obj
+src/**/bin

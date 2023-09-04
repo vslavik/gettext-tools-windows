@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<PropertyGroup>
+		<PackageId>Gettext.Tools</PackageId>
+		<PackageVersion>0.21.1</PackageVersion>
+		<Title>GNU gettext tools for Windows</Title>
+		<Authors>Vaclav Slavik</Authors>
+		<PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/vslavik/gettext-tools-windows</PackageProjectUrl>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<Description>Windows build of GNU gettext tools (msgfmt, xgettext etc.), maintained by Poedit developer.</Description>
+		<Copyright>Copyright (C) Free Software Foundation, Inc. {http://fsf.org/}</Copyright>
+		<PackageTags>gnu gettext msgfmt xgettext msgmerge</PackageTags>
+
+		<PackageOutputPath>$(MSBuildThisFileDirectory)build\</PackageOutputPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="$(MSBuildThisFileDirectory)build\dist\bin\*" Pack="true" PackagePath="\tools\bin" />
+		<None Include="$(MSBuildThisFileDirectory)build\dist\lib\**" Pack="true" PackagePath="\tools\lib" />
+		<None Include="$(MSBuildThisFileDirectory)build\dist\share\**" Pack="true" PackagePath="\tools\share" />
+		<None Include="$(MSBuildThisFileDirectory)build\dist\license.txt" Pack="true" PackagePath="\" />
+		<None Include="$(MSBuildThisFileDirectory)build\dist\readme.txt" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+</Project>

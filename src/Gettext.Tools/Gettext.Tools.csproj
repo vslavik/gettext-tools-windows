@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+		<NoBuild>true</NoBuild>
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+
+		<PackageId>Gettext.Tools</PackageId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="$(MSBuildThisFileDirectory)Gettext.Tools.props" Pack="true" PackagePath="\build" />
+		<None Include="$(MSBuildThisFileDirectory)Init.ps1" Pack="true" PackagePath="\tools" />
+	</ItemGroup>
+</Project>

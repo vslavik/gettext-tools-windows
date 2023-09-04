@@ -34,7 +34,9 @@ GETTEXT_FLAGS     = --prefix=$(MSYS_PREFIX) \
 CFLAGS  := -O2
 LDFLAGS := -Wl,--dynamicbase -Wl,--nxcompat -Wl,--no-seh
 NUGET   ?= nuget
+DOTNET  ?= dotnet
 
+NETSRCDIR   = $(CURDIR)/src
 PATCHESDIR  = $(CURDIR)/patches
 BUILDDIR    = $(CURDIR)/build
 DOWNLOADDIR = $(BUILDDIR)/download
@@ -42,6 +44,8 @@ COMPILEDIR  = $(BUILDDIR)/compile
 STAGEDIR    = $(BUILDDIR)/stage
 USR_LOCAL   = $(STAGEDIR)/usr/local
 DISTDIR     = $(BUILDDIR)/dist
+
+NUGET_CSPROJ_FILE = $(NETSRCDIR)/Gettext.Tools/Gettext.Tools.csproj
 
 ARCHIVE_FILE = $(BUILDDIR)/gettext-tools-windows-$(PACKAGE_VERSION).zip
 NUGET_FILE   = $(BUILDDIR)/Gettext.Tools.$(NUGET_VERSION).nupkg
@@ -139,9 +143,9 @@ archive: dist
 	rm -f $(ARCHIVE_FILE)
 	cd $(DISTDIR) && zip -9 -r $(ARCHIVE_FILE) *
 
-$(NUGET_FILE): Gettext.Tools.nuspec dist
+$(NUGET_FILE): Directory.Build.props dist
 	rm -f $@
-	$(NUGET) pack Gettext.Tools.nuspec -OutputDirectory $(BUILDDIR)
+	$(DOTNET) pack $(NUGET_CSPROJ_FILE) --output $(BUILDDIR)
 
 nuget: $(NUGET_FILE)
 
