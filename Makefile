@@ -1,6 +1,6 @@
 
-GETTEXT_VERSION   = 0.21.1
-LIBICONV_VERSION  = 1.16
+GETTEXT_VERSION   = 0.22
+LIBICONV_VERSION  = 1.17
 
 # version of the gettext-tools-windows package; usually same as GETTEXT_VERSION
 # use "-n" suffix; for NuGet, use ".n" suffix instead, e.g. 0.20.1-1 and 0.20.1.1
@@ -100,16 +100,13 @@ $(GETTEXT_COMPILE): $(GETTEXT_DOWNLOAD) $(LIBICONV_COMPILE)
 		patch -p1 < $$p || exit 1 ; \
 	done
 	cd $(COMPILEDIR)/gettext-$(GETTEXT_VERSION) && \
-		./configure -C $(GETTEXT_FLAGS) CFLAGS="$(CFLAGS)" CXXFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" && \
-		$(MAKE) -C libtextstyle && \
-		$(MAKE) -C gettext-tools
+		./configure -C $(GETTEXT_FLAGS) CFLAGS="$(CFLAGS)" CXXFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)"
+	$(MAKE) -C $(COMPILEDIR)/gettext-$(GETTEXT_VERSION)
 	touch $@
 
 $(GETTEXT_STAGE): $(GETTEXT_COMPILE) $(LIBICONV_STAGE)
 	mkdir -p $(STAGEDIR)
-	cd $(COMPILEDIR)/gettext-$(GETTEXT_VERSION) && \
-		$(MAKE) -C libtextstyle install DESTDIR=$(STAGEDIR) prefix=$(UNIX_PREFIX) && \
-		$(MAKE) -C gettext-tools install DESTDIR=$(STAGEDIR) prefix=$(UNIX_PREFIX)
+	$(MAKE) -C $(COMPILEDIR)/gettext-$(GETTEXT_VERSION) install DESTDIR=$(STAGEDIR) prefix=$(UNIX_PREFIX)
 	rm -f $(STAGEDIR)$(UNIX_PREFIX)/share/locale/locale.alias
 	touch $@
 
