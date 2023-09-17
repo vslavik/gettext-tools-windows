@@ -106,9 +106,7 @@ $(GETTEXT_COMPILE): $(GETTEXT_DOWNLOAD) $(LIBICONV_COMPILE)
 
 $(GETTEXT_STAGE): $(GETTEXT_COMPILE) $(LIBICONV_STAGE)
 	mkdir -p $(STAGEDIR)
-	cd $(COMPILEDIR)/gettext-$(GETTEXT_VERSION) && \
-		$(MAKE) -C libtextstyle install DESTDIR=$(STAGEDIR) prefix=$(UNIX_PREFIX) && \
-		$(MAKE) -C gettext-tools install DESTDIR=$(STAGEDIR) prefix=$(UNIX_PREFIX)
+	$(MAKE) -C $(COMPILEDIR)/gettext-$(GETTEXT_VERSION) install DESTDIR=$(STAGEDIR) prefix=$(UNIX_PREFIX)
 	rm -f $(STAGEDIR)$(UNIX_PREFIX)/share/locale/locale.alias
 	touch $@
 
