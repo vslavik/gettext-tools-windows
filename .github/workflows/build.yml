@@ -17,9 +17,9 @@ jobs:
     - name: Setup MSYS2 environment
       uses: msys2/setup-msys2@v2
       with:
-        msystem: MINGW32
+        msystem: UCRT64
         update: true
-        install: mingw-w64-i686-gcc automake autoconf pkg-config make zip patch tar
+        install: mingw-w64-ucrt-x86_64-gcc automake autoconf pkg-config make zip patch tar
 
     - name: Build binaries
       run: make -j2 MAKE="make -j2"

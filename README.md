@@ -22,7 +22,7 @@ If you prefer to build it yourself, it's simple enough:
    https://www.msys2.org; run all subsequent commands within a MinGW 32 shell.
 2. Install required packages:
     ```
-    pacman -S mingw-w64-i686-gcc automake autoconf pkg-config make zip patch tar
+    pacman -S  mingw-w64-i686-gcc automake autoconf pkg-config make zip patch tar
     ```
 3. Run `make dist` or `make archive` to build everything.
 
@@ -36,10 +36,3 @@ License
 The LICENSE file in this directory applies to GNU gettext itself, which is
 licensed under GPLv3. The makefiles and scripts for building it on Windows are
 in the public domain.
-
-
----
-
-I'm @vslavik on Twitter.
-
-https://github.com/vslavik/gettext-tools-windows

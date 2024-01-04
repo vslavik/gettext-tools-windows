@@ -13,6 +13,8 @@ NUGET_VERSION     = $(GETTEXT_VERSION)
 MSYS_PREFIX       = c:/usr/local
 UNIX_PREFIX       = /usr/local
 
+RUNTIME_DIR       = /ucrt64/bin
+
 LIBICONV_FLAGS    = --prefix=$(MSYS_PREFIX) \
 					--disable-static \
 					--disable-dependency-tracking \
@@ -32,7 +34,7 @@ GETTEXT_FLAGS     = --prefix=$(MSYS_PREFIX) \
 					--enable-relocatable
 
 CFLAGS  := -O2
-LDFLAGS := -Wl,--dynamicbase -Wl,--nxcompat -Wl,--no-seh
+LDFLAGS := -Wl,--dynamicbase -Wl,--nxcompat
 NUGET   ?= nuget
 
 PATCHESDIR  = $(CURDIR)/patches
@@ -120,10 +122,10 @@ dist: stage
 	cp -a $(USR_LOCAL)/bin/recode-sr-latin.exe $(DISTDIR)/bin/
 	cp -a $(USR_LOCAL)/bin/xgettext.exe $(DISTDIR)/bin/
 	cp -a $(USR_LOCAL)/bin/*.dll $(DISTDIR)/bin/
-	cp -a /mingw32/bin/libgcc_s_dw*.dll $(DISTDIR)/bin
-	cp -a /mingw32/bin/libstdc++*.dll $(DISTDIR)/bin
-	cp -a /mingw32/bin/libgomp*.dll $(DISTDIR)/bin
-	cp -a /mingw32/bin/libwinpthread*.dll $(DISTDIR)/bin
+	cp -a $(RUNTIME_DIR)/libgcc_s_seh*.dll $(DISTDIR)/bin
+	cp -a $(RUNTIME_DIR)/libstdc++*.dll $(DISTDIR)/bin
+	cp -a $(RUNTIME_DIR)/libgomp*.dll $(DISTDIR)/bin
+	cp -a $(RUNTIME_DIR)/libwinpthread*.dll $(DISTDIR)/bin
 	cp -a $(USR_LOCAL)/lib/gettext/cldr-plurals.exe $(DISTDIR)/lib/gettext
 	cp -a $(USR_LOCAL)/share/gettext-$(GETTEXT_VERSION) $(DISTDIR)/share/gettext
 	cp -a $(USR_LOCAL)/share/gettext/styles $(DISTDIR)/share/gettext/
