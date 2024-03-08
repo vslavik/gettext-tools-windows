@@ -1,5 +1,5 @@
 
-GETTEXT_VERSION   = 0.22.4
+GETTEXT_VERSION   = 0.22.5
 LIBICONV_VERSION  = 1.17
 
 # version of the gettext-tools-windows package; usually same as GETTEXT_VERSION
