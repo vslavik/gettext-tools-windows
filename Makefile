@@ -1,5 +1,5 @@
 
-GETTEXT_VERSION   = 0.22.5
+GETTEXT_VERSION   = 0.23
 LIBICONV_VERSION  = 1.17
 
 # version of the gettext-tools-windows package; usually same as GETTEXT_VERSION
@@ -126,7 +126,7 @@ dist: stage
 	cp -a $(RUNTIME_DIR)/libstdc++*.dll $(DISTDIR)/bin
 	cp -a $(RUNTIME_DIR)/libgomp*.dll $(DISTDIR)/bin
 	cp -a $(RUNTIME_DIR)/libwinpthread*.dll $(DISTDIR)/bin
-	cp -a $(USR_LOCAL)/lib/gettext/cldr-plurals.exe $(DISTDIR)/lib/gettext
+	cp -a $(USR_LOCAL)/libexec/gettext/cldr-plurals.exe $(DISTDIR)/lib/gettext
 	cp -a $(USR_LOCAL)/share/gettext-$(GETTEXT_VERSION) $(DISTDIR)/share/gettext
 	cp -a $(USR_LOCAL)/share/gettext/styles $(DISTDIR)/share/gettext/
 	cp -a $(USR_LOCAL)/share/locale $(DISTDIR)/share/

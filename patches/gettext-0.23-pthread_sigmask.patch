@@ -2,9 +2,18 @@ From: Michele Locati <michele@locati.it>
 Date: Fri, 10 May 2019 11:11:02 +0200
 Subject: [PATCH] Fix compilation of pthread_sigmask.c
 
---- a/gettext-tools/gnulib-tests/pthread_sigmask.c
-+++ b/gettext-tools/gnulib-tests/pthread_sigmask.c
-@@ -30,9 +30,9 @@
+--- a/gettext-tools/tests/gnulib-lib/pthread_sigmask.c
++++ b/gettext-tools/tests/gnulib-lib/pthread_sigmask.c
+@@ -19,6 +19,8 @@
+ /* Specification.  */
+ #include <signal.h>
+ 
++extern int sigprocmask(int how, const sigset_t *set, sigset_t *oldset);
++
+ #include <errno.h>
+ #include <stddef.h>
+ 
+@@ -30,9 +32,9 @@
  # include <unistd.h>
  #endif
  
