@@ -1,6 +1,6 @@
 
 GETTEXT_VERSION   = 0.23.1
-LIBICONV_VERSION  = 1.17
+LIBICONV_VERSION  = 1.18
 
 # version of the gettext-tools-windows package; usually same as GETTEXT_VERSION
 # use "-n" suffix; for NuGet, use ".n" suffix instead, e.g. 0.20.1-1 and 0.20.1.1
