@@ -19,7 +19,7 @@ jobs:
       with:
         msystem: UCRT64
         update: true
-        install: mingw-w64-ucrt-x86_64-gcc automake autoconf pkg-config make zip patch tar
+        install: mingw-w64-ucrt-x86_64-gcc automake autoconf pkg-config make zip patch tar xz
 
     - name: Build binaries
       run: make -j2 MAKE="make -j2"

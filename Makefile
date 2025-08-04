@@ -51,7 +51,7 @@ NUGET_FILE   = $(BUILDDIR)/Gettext.Tools.$(NUGET_VERSION).nupkg
 LIBICONV_FILE := libiconv-$(LIBICONV_VERSION).tar.gz
 LIBICONV_URL  := http://ftp.gnu.org/pub/gnu/libiconv/$(LIBICONV_FILE)
 
-GETTEXT_FILE := gettext-$(GETTEXT_VERSION).tar.gz
+GETTEXT_FILE := gettext-$(GETTEXT_VERSION).tar.xz
 GETTEXT_URL  := http://ftp.gnu.org/pub/gnu/gettext/$(GETTEXT_FILE)
 
 LIBICONV_DOWNLOAD := $(DOWNLOADDIR)/$(LIBICONV_FILE)
@@ -76,7 +76,7 @@ $(LIBICONV_DOWNLOAD):
 
 $(LIBICONV_COMPILE): $(LIBICONV_DOWNLOAD)
 	mkdir -p $(COMPILEDIR)
-	tar -C $(COMPILEDIR) -xzf $<
+	tar -C $(COMPILEDIR) -xf $<
 	cd $(COMPILEDIR)/libiconv-$(LIBICONV_VERSION) && \
 		./configure $(LIBICONV_FLAGS) CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" && \
 		$(MAKE)
@@ -96,7 +96,7 @@ $(GETTEXT_DOWNLOAD):
 
 $(GETTEXT_COMPILE): $(GETTEXT_DOWNLOAD) $(LIBICONV_COMPILE)
 	mkdir -p $(COMPILEDIR)
-	tar -C $(COMPILEDIR) -xzf $<
+	tar -C $(COMPILEDIR) -xf $<
 	cd $(COMPILEDIR)/gettext-$(GETTEXT_VERSION) && \
 	for p in $(GETTEXT_PATCHES) ; do \
 		patch -p1 < $$p || exit 1 ; \
