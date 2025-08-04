@@ -21,6 +21,9 @@ jobs:
         update: true
         install: mingw-w64-ucrt-x86_64-gcc automake autoconf pkg-config make zip patch tar xz
 
+    - name: Download release tarballs
+      run: make -j1 download
+
     - name: Build binaries
       run: make -j2 MAKE="make -j2"
 

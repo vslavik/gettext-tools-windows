@@ -66,6 +66,7 @@ GETTEXT_STAGE    := $(COMPILEDIR)/GETTEXT.staged
 
 all: archive
 
+download: $(LIBICONV_DOWNLOAD) $(GETTEXT_DOWNLOAD)
 compile: $(LIBICONV_COMPILE) $(GETTEXT_COMPILE)
 stage: $(LIBICONV_STAGE) $(GETTEXT_STAGE)
 
@@ -150,4 +151,4 @@ nuget-push: $(NUGET_FILE)
 clean:
 	rm -rf $(BUILDDIR)
 
-.PHONY: all clean compile stage dist archive nuget nuget-push
+.PHONY: all clean download compile stage dist archive nuget nuget-push
