@@ -1,6 +1,9 @@
 
 GETTEXT_VERSION   = 0.26
+GETTEXT_SHA256    = d1fb86e260cfe7da6031f94d2e44c0da55903dbae0a2fa0fae78c91ae1b56f00
+
 LIBICONV_VERSION  = 1.18
+LIBICONV_SHA256   = 3b08f5f4f9b4eb82f151a7040bfd6fe6c6fb922efe4b1659c66ea933276965e8
 
 # version of the gettext-tools-windows package; usually same as GETTEXT_VERSION
 # use "-n" suffix; for NuGet, use ".n" suffix instead, e.g. 0.20.1-1 and 0.20.1.1
@@ -49,10 +52,10 @@ ARCHIVE_FILE = $(BUILDDIR)/gettext-tools-windows-$(PACKAGE_VERSION).zip
 NUGET_FILE   = $(BUILDDIR)/Gettext.Tools.$(NUGET_VERSION).nupkg
 
 LIBICONV_FILE := libiconv-$(LIBICONV_VERSION).tar.gz
-LIBICONV_URL  := http://ftp.gnu.org/pub/gnu/libiconv/$(LIBICONV_FILE)
+LIBICONV_URL  := http://ftpmirror.gnu.org/gnu/libiconv/$(LIBICONV_FILE)
 
 GETTEXT_FILE := gettext-$(GETTEXT_VERSION).tar.xz
-GETTEXT_URL  := http://ftp.gnu.org/pub/gnu/gettext/$(GETTEXT_FILE)
+GETTEXT_URL  := http://ftpmirror.gnu.org/gnu/gettext/$(GETTEXT_FILE)
 
 LIBICONV_DOWNLOAD := $(DOWNLOADDIR)/$(LIBICONV_FILE)
 LIBICONV_COMPILE  := $(COMPILEDIR)/LIBICONV.built
@@ -74,6 +77,7 @@ stage: $(LIBICONV_STAGE) $(GETTEXT_STAGE)
 $(LIBICONV_DOWNLOAD):
 	mkdir -p $(DOWNLOADDIR)
 	wget -O $@ $(LIBICONV_URL)
+	test $(LIBICONV_SHA256) = `shasum -a256 $@ | cut -f1 -d" "`
 
 $(LIBICONV_COMPILE): $(LIBICONV_DOWNLOAD)
 	mkdir -p $(COMPILEDIR)
@@ -94,6 +98,7 @@ $(LIBICONV_STAGE): $(LIBICONV_COMPILE)
 $(GETTEXT_DOWNLOAD):
 	mkdir -p $(DOWNLOADDIR)
 	wget -O $@ $(GETTEXT_URL)
+	test $(GETTEXT_SHA256) = `shasum -a256 $@ | cut -f1 -d" "`
 
 $(GETTEXT_COMPILE): $(GETTEXT_DOWNLOAD) $(LIBICONV_COMPILE)
 	mkdir -p $(COMPILEDIR)
