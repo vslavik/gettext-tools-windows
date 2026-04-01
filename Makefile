@@ -2,8 +2,8 @@
 GETTEXT_VERSION   = 0.26
 GETTEXT_SHA256    = d1fb86e260cfe7da6031f94d2e44c0da55903dbae0a2fa0fae78c91ae1b56f00
 
-LIBICONV_VERSION  = 1.18
-LIBICONV_SHA256   = 3b08f5f4f9b4eb82f151a7040bfd6fe6c6fb922efe4b1659c66ea933276965e8
+LIBICONV_VERSION  = 1.19
+LIBICONV_SHA256   = 88dd96a8c0464eca144fc791ae60cd31cd8ee78321e67397e25fc095c4a19aa6
 
 # version of the gettext-tools-windows package; usually same as GETTEXT_VERSION
 # use "-n" suffix; for NuGet, use ".n" suffix instead, e.g. 0.20.1-1 and 0.20.1.1
@@ -22,7 +22,8 @@ LIBICONV_FLAGS    = --prefix=$(MSYS_PREFIX) \
 					--disable-static \
 					--disable-dependency-tracking \
 					--disable-rpath \
-					--disable-nls
+					--disable-nls \
+					--enable-relocatable
 
 GETTEXT_FLAGS     = --prefix=$(MSYS_PREFIX) \
 					--disable-static \
