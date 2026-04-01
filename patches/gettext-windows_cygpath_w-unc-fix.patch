@@ -1,0 +1,24 @@
+--- a/gettext-tools/gnulib-lib/windows-cygpath.c	2026-01-02 11:16:16
++++ b/gettext-tools/gnulib-lib/windows-cygpath.c	2026-04-01 14:43:39
+@@ -98,7 +98,7 @@
+ char *
+ windows_cygpath_w (const char *filename)
+ {
+-  if (filename[0] == '/')
++  if (filename[0] == '/' && filename[1] != '/')
+     {
+       /* It's an absolute POSIX-style file name.  */
+       const char *argv[4];
+@@ -114,9 +114,9 @@
+     }
+   else
+     {
+-      /* It's a relative file name, or an absolute native Windows file name.
+-         All we need to do is to convert slashes to backslahes, e.g.
+-         'C:/Users' -> 'C:\Users'.  */
++      /* It's a relative file name, or an absolute native Windows file name,
++         or a UNC path. All we need to do is to convert slashes to backslahes,
++         e.g. 'C:/Users' -> 'C:\Users'.  */
+       size_t len = strlen (filename) + 1;
+       char *copy = XNMALLOC (len, char);
+       for (size_t i = 0; i < len; i++)
