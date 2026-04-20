@@ -7,7 +7,7 @@ contains build scripts, but there are also up-to-date binaries published at
 https://github.com/vslavik/gettext-tools-windows/releases, as well as a NuGet
 package.
 
-It is a spin-off project from my translations editor Poedit: https://poedit.net
+It is a spin-off project from my [simple translations editor Poedit](https://poedit.net).
 
 
 How to build it
