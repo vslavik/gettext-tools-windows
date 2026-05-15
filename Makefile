@@ -40,6 +40,8 @@ GETTEXT_FLAGS     = --prefix=$(MSYS_PREFIX) \
 CFLAGS  := -O2
 LDFLAGS := -Wl,--dynamicbase -Wl,--nxcompat
 NUGET   ?= nuget
+CURL    ?= curl
+CURLFLAGS ?= --fail --location --retry 5 --retry-all-errors
 
 PATCHESDIR  = $(CURDIR)/patches
 BUILDDIR    = $(CURDIR)/build
@@ -77,7 +79,7 @@ stage: $(LIBICONV_STAGE) $(GETTEXT_STAGE)
 
 $(LIBICONV_DOWNLOAD):
 	mkdir -p $(DOWNLOADDIR)
-	wget -O $@ $(LIBICONV_URL)
+	$(CURL) $(CURLFLAGS) --output $@ $(LIBICONV_URL)
 	test $(LIBICONV_SHA256) = `shasum -a256 $@ | cut -f1 -d" "`
 
 $(LIBICONV_COMPILE): $(LIBICONV_DOWNLOAD)
@@ -98,7 +100,7 @@ $(LIBICONV_STAGE): $(LIBICONV_COMPILE)
 
 $(GETTEXT_DOWNLOAD):
 	mkdir -p $(DOWNLOADDIR)
-	wget -O $@ $(GETTEXT_URL)
+	$(CURL) $(CURLFLAGS) --output $@ $(GETTEXT_URL)
 	test $(GETTEXT_SHA256) = `shasum -a256 $@ | cut -f1 -d" "`
 
 $(GETTEXT_COMPILE): $(GETTEXT_DOWNLOAD) $(LIBICONV_COMPILE)
